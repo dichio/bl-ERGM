@@ -1,0 +1,151 @@
+
+> ## 2.2 ESTIMATION 
+> summary(bnet ~ edges + triangle + degree(1:10))
+   edges triangle  degree1  degree2  degree3  degree4  degree5  degree6  degree7 
+      91       53        7        7        6        6        8        7        3 
+ degree8  degree9 degree10 
+       2        0        0 
+
+> bfit <- eval(parse(text = paste("ergm(bnet ~", my_formula, ")")))
+
+> pdf("output/mcmc-diagnostic.pdf")
+
+> mcmc.diagnostics(bfit)
+Sample statistics summary:
+
+Iterations = 121856:293376
+Thinning interval = 512 
+Number of chains = 1 
+Sample size per chain = 336 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                    Mean    SD Naive SE Time-series SE
+gwesp.fixed.0.75 -1.5156 7.738   0.4221         0.6505
+gwdeg.fixed.0.75  0.6172 4.078   0.2225         0.3583
+
+2. Quantiles for each variable:
+
+                    2.5%    25%     50%   75%  97.5%
+gwesp.fixed.0.75 -17.952 -6.115 -1.5398 3.717 13.182
+gwdeg.fixed.0.75  -7.749 -2.011  0.6574 3.425  8.063
+
+
+Are sample statistics significantly different from observed?
+           gwesp.fixed.0.75 gwdeg.fixed.0.75 Overall (Chi^2)
+diff.           -1.51564840       0.61715564              NA
+test stat.      -2.32992037       1.72257004      5.35817252
+P-val.           0.01981036       0.08496631      0.07317229
+
+Sample statistics cross-correlations:
+                 gwesp.fixed.0.75 gwdeg.fixed.0.75
+gwesp.fixed.0.75        1.0000000       -0.7119961
+gwdeg.fixed.0.75       -0.7119961        1.0000000
+
+Sample statistics auto-correlation:
+Chain 1 
+         gwesp.fixed.0.75 gwdeg.fixed.0.75
+Lag 0          1.00000000       1.00000000
+Lag 512        0.40609508       0.44218544
+Lag 1024       0.19071863       0.24642238
+Lag 1536       0.05995654       0.15044713
+Lag 2048       0.06865334       0.04661733
+Lag 2560       0.02076759       0.04673209
+
+Sample statistics burn-in diagnostic (Geweke):
+Chain 1 
+
+Fraction in 1st window = 0.1
+Fraction in 2nd window = 0.5 
+
+gwesp.fixed.0.75 gwdeg.fixed.0.75 
+         -0.6171           0.9179 
+
+Individual P-values (lower = worse):
+gwesp.fixed.0.75 gwdeg.fixed.0.75 
+       0.5371763        0.3586732 
+Joint P-value (lower = worse):  0.5570618 .
+
+MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).
+
+> dev.off()
+null device 
+          1 
+
+> ## 2.3 GOF 
+> bfit.gof <- gof(bfit,control=control.gof.formula(nsim = nsim_gof)) #output simulate 
+
+> bfit.gof
+
+Goodness-of-fit for degree 
+
+         obs min  mean max MC p-value
+degree0   15   6 12.62  20       0.58
+degree1    7   3 11.07  20       0.20
+degree2    7   3  9.56  17       0.54
+degree3    6   1  7.09  15       0.90
+degree4    6   1  5.72  13       0.94
+degree5    8   0  4.11   8       0.02
+degree6    7   0  3.27   7       0.06
+degree7    3   0  2.44   7       0.86
+degree8    2   0  1.83   7       1.00
+degree9    0   0  1.08   5       0.66
+degree10   0   0  0.71   3       0.96
+degree11   0   0  0.54   2       1.00
+degree12   0   0  0.33   4       1.00
+degree13   0   0  0.24   2       1.00
+degree14   0   0  0.18   1       1.00
+degree15   0   0  0.08   1       1.00
+degree16   0   0  0.04   1       1.00
+degree17   0   0  0.05   1       1.00
+degree18   0   0  0.04   1       1.00
+
+Goodness-of-fit for edgewise shared partner 
+
+     obs min  mean max MC p-value
+esp0  17   8 15.33  27       0.72
+esp1  21   9 25.94  43       0.52
+esp2  30  13 23.95  36       0.38
+esp3  16   5 14.94  24       1.00
+esp4   5   0  6.74  16       0.68
+esp5   2   0  2.73  10       1.00
+esp6   0   0  1.00   7       0.82
+esp7   0   0  0.28   3       1.00
+esp8   0   0  0.07   3       1.00
+esp9   0   0  0.02   1       1.00
+
+Goodness-of-fit for minimum geodesic distance 
+
+     obs  min mean  max MC p-value
+1     91   91   91   91          1
+2    139  139  139  139          1
+3    167  167  167  167          1
+4    158  158  158  158          1
+5    117  117  117  117          1
+6     75   75   75   75          1
+7     45   45   45   45          1
+8     23   23   23   23          1
+9      8    8    8    8          1
+10     1    1    1    1          1
+Inf 1006 1006 1006 1006          1
+
+Goodness-of-fit for model statistics 
+
+                       obs      min      mean       max MC p-value
+gwesp.fixed.0.75 109.55096 93.93420 111.06152 129.05626       0.88
+gwdeg.fixed.0.75  81.47708 70.93616  80.67908  89.30253       0.82
+
+> pdf("output/gof.pdf")
+
+> plot(bfit.gof)
+
+> dev.off()
+null device 
+          1 
+
+> #### 3 OUTPUT 
+> 
+> my_log_est <- file("output/estimation.txt")
+
+> sink(my_log_est, append = TRUE, type = "output")

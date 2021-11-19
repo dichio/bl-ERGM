@@ -1,0 +1,6 @@
+{   
+    "network": "data/network.jgf",
+    "my_formula": "gwesp(0.75,fixed=TRUE) + gwdegree(0.75,fixed=TRUE), constraints = ~edges, control=control.ergm(init=c(1.0,1.0), MCMLE.maxit=40)",
+    "nsim_gof": "100",
+    "unfiltered": "TRUE"
+}

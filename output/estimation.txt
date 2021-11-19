@@ -1,0 +1,45 @@
+
+> print("Estimated values and covariance matrix:")
+[1] "Estimated values and covariance matrix:"
+
+> estimate = list(bfit$coefficients,bfit$covar)
+
+> print(estimate)
+[[1]]
+gwesp.fixed.0.75 gwdeg.fixed.0.75 
+       1.6033216        0.8092952 
+
+[[2]]
+                 gwesp.fixed.0.75 gwdeg.fixed.0.75
+gwesp.fixed.0.75       0.03397312       0.04589542
+gwdeg.fixed.0.75       0.04589542       0.12230607
+
+
+> print("Summary of the fitting procedure:")
+[1] "Summary of the fitting procedure:"
+
+> summary(bfit)
+Call:
+ergm(formula = bnet ~ gwesp(0.75, fixed = TRUE) + gwdegree(0.75, 
+    fixed = TRUE), constraints = ~edges, control = control.ergm(init = c(1, 
+    1), MCMLE.maxit = 40))
+
+Monte Carlo Maximum Likelihood Results:
+
+                 Estimate Std. Error MCMC % z value Pr(>|z|)    
+gwesp.fixed.0.75   1.6033     0.1848      0   8.674   <1e-04 ***
+gwdeg.fixed.0.75   0.8093     0.3508      0   2.307   0.0211 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+     Null Deviance:    0.0  on 1830  degrees of freedom
+ Residual Deviance: -146.3  on 1828  degrees of freedom
+ 
+Note that the null model likelihood and deviance are defined to be 0.
+This means that all likelihood-based inference (LRT, Analysis of
+Deviance, AIC, BIC, etc.) is only valid between models with the same
+reference distribution and constraints.
+
+AIC: -142.3  BIC: -131.3  (Smaller is better. MC Std. Err. = 1.49)
+
+> closeAllConnections()
