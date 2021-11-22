@@ -5,13 +5,13 @@ This app estimates the parameters of an Exponential Random Graph Model (ERGM) on
 - Vito Dichio (vito.dichio@etu.sorbonne-universite.fr)
 ## Basics
 #### ERGM in a nutshell
-Given a graph G and a set of sufficient statistics $\bm{x}(G)\in\mathbb{R}^m$ and a set of parameters $\bm{\theta}\in\mathbb{R}^m$, an ERGM assigns is specified by the following p.d.f.: 
+Given a graph G and a set of sufficient statistics $\mathbf{x}(G)\in\mathbb{R}^m$ and a set of parameters $\mathbf{\theta}\in\mathbb{R}^m$, an ERGM assigns is specified by the following p.d.f.: 
 
 
 <img width="305" alt="Screenshot 2021-11-20 at 12 50 53" src="https://user-images.githubusercontent.com/79842912/142725299-befccceb-51af-42b5-bdaa-034718b4fba6.png">
 
 
-the goal of an ERGM fit is to estimate the parameters $\bm{\theta}$, given an observed graph $G$. Current implementations are based on MCMC-MLE procedures, from which estimates can be drawn together with st.deviations. In addition, model assessment can be performed by simulating synthetic networks from the estimated model and resorting graphical Goodness of Fit (GoF) methods.
+the goal of an ERGM fit is to estimate the parameters $\mathbf{\theta}$, given an observed graph $G$. Current implementations are based on MCMC-MLE procedures, from which estimates can be drawn together with st.deviations. In addition, model assessment can be performed by simulating synthetic networks from the estimated model and resorting graphical Goodness of Fit (GoF) methods.
 
 #### Implementation
 The current app is based on the *ergm* package for *R* language [1].  We refer to the documentation for details on the estimation procedure; useful [tutorials](https://github.com/statnet/Workshops/wiki) are provided by the *statnet* community e.g. [here](http://statnet.org/Workshops/ergm_tutorial.html).
