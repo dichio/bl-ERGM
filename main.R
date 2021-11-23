@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 #### 1 INPUT
 
 ## 1.1 INPUT-EXT
