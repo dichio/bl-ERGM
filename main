@@ -3,12 +3,13 @@
 #PBS -l vmem=6gb
 #PBS -l walltime=00:05:00
 
+set -ex
+
 network=$(jq -r .network config.json)
 my_formula=$(jq -r .my_formula config.json)
 nsim_gof=$(jq -r .nsim_gof config.json)
 unfiltered=$(jq -r .unfiltered config.json)
 
-chmod +x main.R
-Rscript main.R $network $my_formula $nsim_gof $unfiltered
+singularity exec -e docker://brainlife/rscript ./main.R $network $my_formula $nsim_gof $unfiltered
 
 echo "done"
