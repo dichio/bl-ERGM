@@ -3,12 +3,11 @@
 print(.libPaths())
 ## 1.1 INPUT-EXT
 library("rjson")
-config <- fromJSON(file = "config.json")
 
-namefile = as.character(config[1])
-my_formula = as.character(config[2])
-nsim_gof <- as.integer(config[3])
-unfiltered = as.logical(config[4])
+namefile = as.character(config$network)
+my_formula = as.character(config$my_formula)
+nsim_gof <- as.integer(config$nsim_gof)
+unfiltered = as.logical(config$unfiltered)
 
 ## 1.2 INPUT-INT
 
