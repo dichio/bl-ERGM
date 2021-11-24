@@ -3,6 +3,7 @@
 print(.libPaths())
 ## 1.1 INPUT-EXT
 library("rjson")
+config <- fromJSON(file = "config.json")
 
 namefile = as.character(config$network)
 my_formula = as.character(config$my_formula)
