@@ -3,6 +3,7 @@ Source code for the app **ERGMs for Brain Networks** in [Brainlife.io](https://b
 This app estimates the parameters of an Exponential Random Graph Model (ERGM) on brain network data. 
 #### Authors
 - Vito Dichio (vito.dichio@etu.sorbonne-universite.fr)
+- Soichi Hayashi
 ## Basics
 #### ERGM in a nutshell
 Given a graph G and a set of sufficient statistics $\mathbf{x}(G)\in\mathbb{R}^m$ and a set of parameters $\mathbf{\theta}\in\mathbb{R}^m$, an ERGM assigns is specified by the following p.d.f.: 
