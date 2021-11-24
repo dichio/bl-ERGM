@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 #### 1 INPUT
-
+print(.libPaths())
 ## 1.1 INPUT-EXT
 library("rjson")
 config <- fromJSON(file = "config.json")
@@ -97,6 +97,7 @@ bnet = network(data, directed = FALSE)
 
 #### 2 ERGM 
 library(ergm)
+
 my_log <- file("output/log-computation.txt")
 sink(my_log, append = TRUE, type = "output")
 
