@@ -55,26 +55,37 @@ ECO <- function(data, k=3, directed = FALSE)
   return(W)
 }
 #----
-
+       
 json_data <- fromJSON(file=namefile)
 
 n_nodes = length(json_data$graph$nodes)
 n_attr = length(json_data$graph$nodes[[1]]$metadata)
 n_ecov = length(json_data$graph$edges[[1]]$metadata) - 1
 
+if(n_attr>0){
 attrs = matrix(nrow = n_nodes, ncol = n_attr)
 for(r in 1:n_nodes){
   for(c in 1:n_attr){
     attrs[r,c] = json_data$graph$nodes[[r]]$metadata[[c]]
   }
 }
+}
 
+if(n_ecov==0){
+data = matrix(nrow = n_nodes, ncol = n_nodes)
+for(r in 1:n_nodes){
+  for(c in 1:n_nodes){
+    data[r,c] = json_data$graph$edges[[n_nodes*(r-1)+c]]$metadata[[1]]
+  }
+}
+}
+
+if(n_ecov>0){
 data = matrix(nrow = n_nodes, ncol = n_nodes)
 ecov = vector(mode='list',length = n_ecov)
 for(i in 1:length((ecov))){
   ecov[[i]] = empty_matrix<-matrix(NA,n_nodes,n_nodes) 
 }
-
 for(r in 1:n_nodes){
   for(c in 1:n_nodes){
     data[r,c] = json_data$graph$edges[[n_nodes*(r-1)+c]]$metadata[[1]]
@@ -83,21 +94,20 @@ for(r in 1:n_nodes){
     }
   }
 }
-
+}
 
 if (unfiltered == TRUE){
   RB = ECO(data, 3, FALSE)
   data = ifelse(RB > 0, 1, 0)
-
+}
 
 library(network)
 bnet = network(data, directed = FALSE)
-}
+
 
 
 #### 2 ERGM 
 library(ergm)
-
 my_log <- file("output/log-computation.txt")
 sink(my_log, append = TRUE, type = "output")
 
@@ -128,6 +138,9 @@ summary(bfit)
 
 
 closeAllConnections()
+
+
+
 
 
 
