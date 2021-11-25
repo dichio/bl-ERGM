@@ -48,9 +48,9 @@ for(r in 1:n_nodes) {
 #also.. let's initialize edges between all row/col pairs (with empty metadata)
 edges <- c()
 for(r in 1:n_nodes) {
-  source_nodeid <- paste("node-", toString(r), sep="")
+  source_nodeid <- paste(toString(r))
   for(c in 1:n_nodes) {
-    target_nodeid <- paste("node-", toString(c), sep="")
+    target_nodeid <- paste(toString(c))
     edge <- list(
       source = source_nodeid,
       target = target_nodeid,
