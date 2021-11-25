@@ -66,35 +66,42 @@ if(n_attr>0){
 attrs = matrix(nrow = n_nodes, ncol = n_attr)
 for(r in 1:n_nodes){
   for(c in 1:n_attr){
-    attrs[r,c] = json_data$graph$nodes[[r]]$metadata[[c]]
+    if(is.null(json_data$graph$nodes[[r]]$metadata[[c]])){
+      attrs[r,c] = 0
+      } else {
+      attrs[r,c] = json_data$graph$nodes[[r]]$metadata[[c]]
+      }
   }
 }
 }
 
 if(n_ecov==0){
-data = matrix(nrow = n_nodes, ncol = n_nodes)
-for(r in 1:n_nodes){
-  for(c in 1:n_nodes){
-    data[r,c] = json_data$graph$edges[[n_nodes*(r-1)+c]]$metadata[[1]]
+data = matrix(0, nrow = n_nodes, ncol = n_nodes)
+
+for(i in 1:length(json_data$graph$edges)){
+  r = as.numeric(json_data$graph$edges[[i]]$source)
+  c = as.numeric(json_data$graph$edges[[i]]$target)
+  data[r,c] = json_data$graph$edges[[i]]$metadata[[1]]
   }
-}
 }
 
 if(n_ecov>0){
 data = matrix(nrow = n_nodes, ncol = n_nodes)
 ecov = vector(mode='list',length = n_ecov)
 for(i in 1:length((ecov))){
-  ecov[[i]] = empty_matrix<-matrix(NA,n_nodes,n_nodes) 
+  ecov[[i]] = empty_matrix<-matrix(0.0,n_nodes,n_nodes) 
 }
-for(r in 1:n_nodes){
-  for(c in 1:n_nodes){
-    data[r,c] = json_data$graph$edges[[n_nodes*(r-1)+c]]$metadata[[1]]
-    for(e in 1:n_ecov){
-      ecov[[e]][r,c] = json_data$graph$edges[[n_nodes*(r-1)+c]]$metadata[[1+e]]    
+
+for(i in 1:length(json_data$graph$edges)){
+  r = as.numeric(json_data$graph$edges[[i]]$source)
+  c = as.numeric(json_data$graph$edges[[i]]$target)
+  data[r,c] = json_data$graph$edges[[i]]$metadata[[1]]
+  for(e in 1:n_ecov){
+    ecov[[e]][r,c] = json_data$graph$edges[[i]]$metadata[[1+e]]
     }
   }
 }
-}
+
 
 if (unfiltered == TRUE){
   RB = ECO(data, 3, FALSE)
