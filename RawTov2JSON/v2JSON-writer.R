@@ -17,7 +17,7 @@ nodes <- list()
 if(are_there_attrs==TRUE){
 attrs <- as.matrix(read.table("data/attrs.txt",header=TRUE,stringsAsFactors=FALSE))
 for(r in 1:n_nodes) {
-    nodeid <- paste("node-", toString(r), sep="")
+    nodeid <- paste(toString(r))
     
     #let's create "metadata" object with all attributes
     metadata = list()
