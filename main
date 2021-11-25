@@ -10,7 +10,11 @@ my_formula=$(jq -r .my_formula config.json)
 nsim_gof=$(jq -r .nsim_gof config.json)
 unfiltered=$(jq -r .unfiltered config.json)
 
+mkdir -p ergmout 
+
 singularity exec -e docker://brainlife/r-ergm:4.2-6775 ./main.R \
     $network $my_formula $nsim_gof $unfiltered
+
+
 
 echo "done"
