@@ -19,10 +19,10 @@ The current app is based on the *ergm* package for *R* language [1].  We refer t
 For examples of applications to neuroscience, see for instance [2-3]. The default model implemented here is the one selected in [3].
 ## Input/Output
 ### Input
-- **Network**: The input brain network must be stored in the [v2 JSON graph format](https://github.com/jsongraph/json-graph-specification). The *edge* objects contain information about the elements of connectivity (or adjacency) matrix, together with any other user-specified edge covariate. In the *node* objects it is possible to store nodal attributes. (*NB*: An example of *R* code to transform raw data into the v2JSON format is provided in *dichio/bl-ERGM/RawTov2JSON/v2JSON-writer.R*)
+- **Network**: The network can be either fully connected and weighted (unfiltered) or thresholded and binarized (filtered). The input brain network must be stored in the [v2 JSON graph format](https://github.com/jsongraph/json-graph-specification). The *edge* objects contain information about the elements of connectivity (or adjacency) matrix, together with any other user-specified edge covariate. In the *node* objects it is possible to store nodal attributes. (*NB*: An example of *R* code to transform raw data into the v2JSON format is provided in *dichio/bl-ERGM/RawTov2JSON/v2JSON-writer.R*)
 - **ERGM formula**: String containing the ERGM formula according to the guidelines of the *ergm* package for *R* [1].
 - **nsim_gof**: Integer number of simulated networks used for Goodness of Fit (GoF) model assessment.
-- **unfiltered**: Boolean variable specifying if the input network is not already discretized into binary states. In the case of connectivity matrices (**unfiltered**=TRUE), the app implements the ECO filtering criterion ($k=3$) [4].
+- **unfiltered**: Boolean variable specifying if the input network is not thresholded and binarized. If this is the case (unfiltered=TRUE), the app applies the ECO filtering criterion ($k=3$) [4].
 ### Output
 - **estimation.txt**: Result of the fitting procedure i.e. estimated parameters, st.errors, covariance matrix.
 - **log-computation.txt**
