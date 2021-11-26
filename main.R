@@ -111,7 +111,7 @@ if (unfiltered == TRUE){
 library(network)
 bnet = network(data, directed = FALSE)
 
-
+setwd("./ergmout")
 
 #### 2 ERGM 
 library(ergm)
