@@ -111,17 +111,17 @@ if (unfiltered == TRUE){
 library(network)
 bnet = network(data, directed = FALSE)
 
-setwd("./ergmout")
+#setwd("./ergmout")
 
 #### 2 ERGM 
 library(ergm)
-my_log <- file("log-computation.txt")
+my_log <- file("ergmout/log-computation.txt")
 sink(my_log, append = TRUE, type = "output")
 
 ## 2.2 ESTIMATION 
 summary(bnet ~ edges + triangle + degree(1:10))
 bfit <- eval(parse(text = paste("ergm(bnet ~", my_formula, ")")))
-pdf("mcmc-diagnostic.pdf")
+pdf("ergmout/mcmc-diagnostic.pdf")
 mcmc.diagnostics(bfit)
 dev.off()
 
@@ -129,13 +129,13 @@ dev.off()
 bfit.gof <- gof(bfit,control=control.gof.formula(nsim = nsim_gof)) #output simulate 
 bfit.gof
 
-pdf("gof.pdf")
+pdf("ergmout/gof.pdf")
 plot(bfit.gof)
 dev.off()
 
 #### 3 OUTPUT 
 
-my_log_est <- file("estimation.txt")
+my_log_est <- file("ergmout/estimation.txt")
 sink(my_log_est, append = TRUE, type = "output")
 print("Estimated values and covariance matrix:")
 estimate = list(bfit$coefficients,bfit$covar)
